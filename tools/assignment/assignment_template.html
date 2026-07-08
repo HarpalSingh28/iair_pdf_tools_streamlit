@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+    @page {
+        size: A4;
+        margin: 1.6cm 1.5cm 2.1cm 1.5cm;
+    }
+    * { box-sizing: border-box; }
+    body {
+        font-family: Arial, Helvetica, sans-serif;
+        color: #1a1a1a;
+        font-size: 10.3pt;
+        line-height: 1.45;
+    }
+
+    /* ---------- Title box ---------- */
+    .title-box {
+        border: 2px solid #2f6fad;
+        background: #eaf3fb;
+        border-radius: 8px;
+        padding: 12px 18px;
+        margin-bottom: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .title-box .title-col { text-align: center; flex: 1 1 auto; }
+    .title-box .title-col h1 {
+        margin: 0;
+        font-size: 19pt;
+        letter-spacing: 0.5px;
+        color: #14315c;
+    }
+    .title-box .title-col h2 {
+        margin: 3px 0 1px 0;
+        font-size: 11.5pt;
+        color: #2f6fad;
+        font-weight: bold;
+    }
+    .title-box .title-col h3 {
+        margin: 1px 0 0 0;
+        font-size: 10pt;
+        color: #333;
+    }
+    .title-box .marks-col {
+        flex: 0 0 auto;
+        text-align: right;
+        font-size: 9pt;
+        font-weight: bold;
+        color: #1f4e79;
+        white-space: nowrap;
+        padding-left: 14px;
+    }
+    .title-box .marks-col div { margin-bottom: 2px; }
+
+    /* ---------- Name / roll fields ---------- */
+    .info-fields {
+        display: flex;
+        justify-content: space-between;
+        margin: 10px 0 16px 0;
+        font-size: 10pt;
+    }
+    .info-fields .col { width: 48%; }
+    .field-line { display: flex; align-items: baseline; margin-bottom: 10px; }
+    .field-line .label { font-weight: bold; color: #1f4e79; white-space: nowrap; margin-right: 6px; }
+    .field-line .dots { flex: 1; border-bottom: 1px dashed #999; }
+
+    /* ---------- Sections ---------- */
+    .section { margin-bottom: 14px; break-inside: avoid; }
+    .section-header {
+        background: #1f4e79;
+        color: #fff;
+        padding: 6px 12px;
+        border-radius: 5px 5px 0 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-weight: bold;
+        font-size: 10.5pt;
+    }
+    .section-header .badge {
+        background: #eaf3fb;
+        color: #1f4e79;
+        border-radius: 4px;
+        padding: 2px 9px;
+        font-size: 9pt;
+        font-weight: bold;
+    }
+    .section-body {
+        border: 1px solid #cfd9e3;
+        border-top: none;
+        border-radius: 0 0 5px 5px;
+        padding: 10px 14px 12px 14px;
+    }
+    .wordbank, .options-bar {
+        background: #eefaf0;
+        border: 1.5px dashed #7fbf9a;
+        border-radius: 5px;
+        padding: 7px 12px;
+        margin-bottom: 10px;
+        font-size: 9.6pt;
+        text-align: center;
+        font-weight: bold;
+        color: #1f6b3a;
+    }
+    .options-bar {
+        background: #eaf3fb;
+        border-color: #7fa7d8;
+        color: #1f4e79;
+    }
+    .q-item { display: flex; align-items: baseline; margin-bottom: 9px; }
+    .q-item .qnum { font-weight: bold; margin-right: 5px; white-space: nowrap; }
+    .q-item .qtext { margin-right: 6px; }
+    .q-item .dots { flex: 1; border-bottom: 1px dotted #888; min-width: 40px; margin: 0 4px; }
+
+    table.match-table { width: 100%; border-collapse: collapse; margin-bottom: 10px; font-size: 9.8pt; }
+    table.match-table th { background: #1f4e79; color: #fff; text-align: left; padding: 5px 10px; }
+    table.match-table td { border-bottom: 1px solid #e2e2e2; padding: 5px 10px; }
+    .answers-row {
+        background: #f5f7fa;
+        border: 1px solid #dfe6ee;
+        border-radius: 4px;
+        padding: 6px 10px;
+        font-size: 9.5pt;
+        display: flex;
+        gap: 18px;
+        flex-wrap: wrap;
+    }
+    .answers-row .label { font-weight: bold; color: #1f4e79; }
+    .answer-blank { display: inline-block; border-bottom: 1px dotted #888; min-width: 26px; margin-left: 3px; }
+
+    /* ---------- Tri-option table (Section D) ---------- */
+    .instruction { font-size: 9.5pt; color: #444; margin-bottom: 8px; }
+    table.tri-table { width: 100%; border-collapse: collapse; font-size: 9.6pt; }
+    table.tri-table td {
+        border-bottom: 1px solid #e2e2e2;
+        padding: 8px 6px;
+        vertical-align: middle;
+    }
+    table.tri-table td.stmt { width: 58%; }
+    table.tri-table td.chk { white-space: nowrap; text-align: left; padding-left: 10px; }
+    .checkbox {
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        border: 1.3px solid #555;
+        border-radius: 2px;
+        margin-right: 5px;
+        vertical-align: middle;
+    }
+
+    /* ---------- Brief answer (Section E) ---------- */
+    .brief-q { margin-bottom: 12px; }
+    .brief-q .qhead { font-weight: bold; color: #1f4e79; margin-bottom: 4px; }
+    .brief-q .lines { border-bottom: 1px dashed #aaa; height: 16px; margin-bottom: 4px; }
+    .brief-q .sub { margin-left: 12px; font-size: 9.8pt; margin-top: 6px; }
+
+    /* ---------- Student reminder ---------- */
+    .reminder-box {
+        background: #eaf3fb;
+        border-left: 4px solid #2f6fad;
+        border-radius: 4px;
+        padding: 10px 14px;
+        font-size: 9.5pt;
+        margin-top: 6px;
+    }
+    .reminder-box b { color: #1f4e79; }
+
+    /* ---------- Answer key page ---------- */
+    .solutions-page { break-before: page; }
+    .solutions-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 2px solid #2f6fad;
+        padding-bottom: 8px;
+        margin-bottom: 12px;
+    }
+    .solutions-header h1 { margin: 0; font-size: 14pt; color: #14315c; }
+    .solutions-header .meta { text-align: right; font-size: 9pt; font-weight: bold; color: #1f4e79; }
+    .answer-banner {
+        background: #1f4e79;
+        color: #fff;
+        text-align: center;
+        font-weight: bold;
+        font-size: 12.5pt;
+        padding: 8px;
+        border-radius: 6px;
+        margin-bottom: 14px;
+    }
+    .answer-grid { display: flex; gap: 12px; margin-bottom: 12px; }
+    .answer-card {
+        background: #f4f8fc;
+        border: 1px solid #d7e3ef;
+        border-radius: 6px;
+        padding: 10px 14px;
+        flex: 1 1 0;
+        font-size: 9.6pt;
+        break-inside: avoid;
+        margin-bottom: 12px;
+    }
+    .answer-card h4 { margin: 0 0 8px 0; color: #1f4e79; font-size: 10pt; }
+    .answer-card ol, .answer-card ul { margin: 0; padding-left: 18px; }
+    .answer-card li { margin-bottom: 4px; }
+    .answer-card p { margin: 0 0 8px 0; }
+</style>
+</head>
+<body>
+
+<div class="title-box">
+    <div class="title-col">
+        <h1>{{ subject_title | upper }}</h1>
+        <h2>{{ assignment_title | upper }}</h2>
+        <h3>Classes {{ class_range }}</h3>
+    </div>
+    <div class="marks-col">
+        <div>Maximum Marks: {{ max_marks }}</div>
+        <div>Time Allowed: {{ time_allowed }}</div>
+    </div>
+</div>
+
+<div class="info-fields">
+    <div class="col">
+        <div class="field-line"><span class="label">Name:</span><span class="dots"></span></div>
+        <div class="field-line"><span class="label">Roll Number:</span><span class="dots"></span></div>
+    </div>
+    <div class="col">
+        <div class="field-line"><span class="label">Class &amp; Section:</span><span class="dots"></span></div>
+        <div class="field-line"><span class="label">Date:</span><span class="dots"></span></div>
+    </div>
+</div>
+
+{% if section_a_items %}
+<div class="section">
+    <div class="section-header"><span>Section A: Fill in the Blanks</span><span class="badge">{{ section_a_marks }}</span></div>
+    <div class="section-body">
+        <div class="wordbank">WORD BANK: {{ section_a_wordbank | join('  |  ') }}</div>
+        {% for item in section_a_items %}
+        <div class="q-item"><span class="qnum">{{ loop.index }}.</span><span class="qtext">{{ item }}</span><span class="dots"></span></div>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+
+{% if section_b_pairs %}
+<div class="section">
+    <div class="section-header"><span>Section B: Match the Following</span><span class="badge">{{ section_b_marks }}</span></div>
+    <div class="section-body">
+        <table class="match-table">
+            <tr><th>Column A</th><th>Column B</th></tr>
+            {% for pair in section_b_pairs %}
+            <tr><td>{{ loop.index }}. {{ pair.col_a }}</td><td>{{ 'abcdefgh'[loop.index0] }}. {{ pair.col_b }}</td></tr>
+            {% endfor %}
+        </table>
+        <div class="answers-row">
+            <span class="label">Answers:</span>
+            {% for pair in section_b_pairs %}
+            <span>{{ loop.index }} - <span class="answer-blank"></span></span>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% if section_c_items %}
+<div class="section">
+    <div class="section-header"><span>Section C: Identify the AI Action or Domain</span><span class="badge">{{ section_c_marks }}</span></div>
+    <div class="section-body">
+        <div class="options-bar">Options: {{ section_c_options | join('  |  ') }}</div>
+        {% for item in section_c_items %}
+        <div class="q-item"><span class="qnum">{{ loop.index }}.</span><span class="qtext">{{ item }}</span><span class="dots"></span></div>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+
+{% if section_d_items %}
+<div class="section">
+    <div class="section-header"><span>Section D: {{ section_d_title }}</span><span class="badge">{{ section_d_marks }}</span></div>
+    <div class="section-body">
+        {% if section_d_intro %}<div class="instruction">{{ section_d_intro }}</div>{% endif %}
+        <table class="tri-table">
+            {% for item in section_d_items %}
+            <tr>
+                <td class="stmt">{{ loop.index }}. {{ item.statement }}</td>
+                <td class="chk"><span class="checkbox"></span>{{ section_d_options[0] }}</td>
+                <td class="chk"><span class="checkbox"></span>{{ section_d_options[1] }}</td>
+                <td class="chk"><span class="checkbox"></span>{{ section_d_options[2] }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+{% endif %}
+
+{% if section_e_items %}
+<div class="section">
+    <div class="section-header"><span>Section E: Answer Briefly</span><span class="badge">{{ section_e_marks }}</span></div>
+    <div class="section-body">
+        {% for item in section_e_items %}
+        <div class="brief-q">
+            <div class="qhead">Q{{ loop.index }}. {{ item.question }}</div>
+            {% if item.subparts %}
+                {% for sp in item.subparts %}
+                <div class="sub">• {{ sp }}: <span style="border-bottom:1px dotted #888; display:inline-block; min-width:250px;">&nbsp;</span></div>
+                {% endfor %}
+            {% else %}
+                <div class="lines"></div>
+                <div class="lines"></div>
+            {% endif %}
+        </div>
+        {% endfor %}
+        {% if student_reminder %}
+        <div class="reminder-box"><b>Student Reminder:</b> {{ student_reminder }}</div>
+        {% endif %}
+    </div>
+</div>
+{% endif %}
+
+{% if show_solutions %}
+<div class="solutions-page">
+    <div class="solutions-header">
+        <h1>COMPLETE SOLUTIONS</h1>
+        <div class="meta">{{ week_label }}<br>Classes {{ class_range }}</div>
+    </div>
+    <div class="answer-banner">ANSWER KEY</div>
+
+    <div class="answer-grid">
+        {% if section_a_answers %}
+        <div class="answer-card">
+            <h4>Section A: Fill in the Blanks</h4>
+            <ol>{% for a in section_a_answers %}<li><b>{{ a }}</b></li>{% endfor %}</ol>
+        </div>
+        {% endif %}
+        {% if section_b_answers %}
+        <div class="answer-card">
+            <h4>Section B: Match the Following</h4>
+            <ol>{% for a in section_b_answers %}<li><b>{{ a.num }} - {{ a.letter }}</b>: {{ a.explanation }}</li>{% endfor %}</ol>
+        </div>
+        {% endif %}
+    </div>
+
+    {% if section_c_answers %}
+    <div class="answer-card">
+        <h4>Section C: Identify the AI Action or Domain</h4>
+        <ol>{% for a in section_c_answers %}<li><b>{{ a.answer }}</b>{% if a.explanation %} - {{ a.explanation }}{% endif %}</li>{% endfor %}</ol>
+    </div>
+    {% endif %}
+
+    {% if section_d_answers %}
+    <div class="answer-card">
+        <h4>Section D: {{ section_d_title }}</h4>
+        <ol>{% for a in section_d_answers %}<li><b>{{ a.answer }}</b>{% if a.explanation %} - {{ a.explanation }}{% endif %}</li>{% endfor %}</ol>
+    </div>
+    {% endif %}
+
+    {% if section_e_answers %}
+    <div class="answer-card">
+        <h4>Section E: Answer Briefly</h4>
+        {% for a in section_e_answers %}<p><b>Ans.{{ loop.index }}.</b> {{ a }}</p>{% endfor %}
+    </div>
+    {% endif %}
+</div>
+{% endif %}
+
+</body>
+</html>

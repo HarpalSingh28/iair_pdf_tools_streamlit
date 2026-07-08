@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+    @page { size: A4; margin: 0.95cm 1.05cm 1.65cm 1.05cm; }
+    * { box-sizing: border-box; }
+    body {
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+        color: #1f2937;
+        font-size: 9.45pt;
+        line-height: 1.32;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+    .page { min-height: 27.0cm; break-after: page; position: relative; }
+    .page:last-child { break-after: auto; }
+    .page.compact { font-size: 9.25pt; }
+
+    :root {
+        --iair-blue: #2f76b4;
+        --iair-dark: #14345d;
+        --iair-mid: #1f5d93;
+        --iair-light: #eaf4fb;
+        --line: #cfe0ed;
+        --pale: #f7fbff;
+    }
+
+    /* Header line used after page 1: equal left/right zones keep headings truly centered */
+    .top-title-row {
+        display: grid;
+        grid-template-columns: 185px 1fr 185px;
+        align-items: center;
+        min-height: 47px;
+        margin-bottom: 17px;
+        border-bottom: 2.2px solid var(--iair-blue);
+        padding: 0 0 14px 0;
+        column-gap: 10px;
+    }
+    .top-title-row .top-logo { justify-self: start; align-self: center; }
+    .top-title-row .top-logo img { width:165px; height:auto; display:block; }
+    .top-title-row .page-heading {
+        color: var(--iair-dark);
+        font-size: 16.8pt;
+        font-weight: 900;
+        letter-spacing: .25px;
+        text-align: center;
+        text-transform: uppercase;
+        white-space: nowrap;
+        justify-self: center;
+    }
+    .top-title-row .right-meta {
+        color: #1e5f98;
+        text-align: right;
+        font-weight: 800;
+        font-size: 9.6pt;
+        line-height: 1.22;
+        justify-self: end;
+        white-space: normal;
+    }
+
+    /* Page 1 hero */
+    .title-box {
+        border: 1.9px solid var(--iair-blue);
+        background: linear-gradient(90deg, #eef8fe, #f7fcff);
+        border-radius: 11px;
+        min-height: 118px;
+        padding: 16px 20px 14px 20px;
+        margin-bottom: 16px;
+        display: grid;
+        grid-template-columns: 210px 1fr 170px;
+        gap: 16px;
+        align-items: center;
+    }
+    .title-logo img { width: 175px; height: auto; display: block; }
+    .title-main { text-align: center; }
+    .title-main h1 {
+        margin: 0 0 3px 0;
+        color: var(--iair-dark);
+        font-size: 18.5pt;
+        letter-spacing: .4px;
+        line-height: 1.05;
+        font-weight: 900;
+        text-transform: uppercase;
+        white-space: nowrap;
+    }
+    .title-main h2 {
+        margin: 0 0 2px 0;
+        color: #236fac;
+        font-size: 12.2pt;
+        font-weight: 900;
+        text-transform: uppercase;
+        white-space: nowrap;
+    }
+    .title-main h3 { margin: 0; font-size: 10.4pt; color: var(--iair-dark); font-weight: 800; }
+    .title-marks { text-align: right; color: var(--iair-dark); font-weight: 800; font-size: 9.0pt; line-height: 1.7; }
+
+    .info-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        column-gap: 38px;
+        row-gap: 3px;
+        margin: 6px 0 10px 0;
+        color: #174f7f;
+        font-size: 10pt;
+        font-weight: 700;
+    }
+    .field-line { display: grid; grid-template-columns: auto 1fr; align-items: end; column-gap: 12px; }
+    .field-line .dots { border-bottom: 1.5px dashed #7890a6; height: 14px; }
+
+    .instruction-box {
+        border: 1px solid var(--line);
+        border-left: 5px solid var(--iair-blue);
+        background: #f4fbff;
+        border-radius: 8px;
+        padding: 9px 16px 9px 16px;
+        margin-bottom: 15px;
+        min-height: 82px;
+    }
+    .instruction-box h3 { margin: 0 0 7px 0; color: #1b5b8d; font-size: 10.5pt; }
+    .instruction-box ol { margin: 0; padding-left: 20px; }
+    .instruction-box li { margin: 2px 0; }
+
+    /* Common sections */
+    .section-header {
+        background: var(--iair-blue);
+        color: white;
+        border-radius: 6px;
+        min-height: 27px;
+        padding: 6px 12px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-weight: 800;
+        font-size: 10.6pt;
+        margin: 0 0 9px 0;
+    }
+    .section-header .badge {
+        background: rgba(255,255,255,.20);
+        color: #fff;
+        border-radius: 5px;
+        padding: 3px 12px;
+        min-width: 124px;
+        text-align: center;
+        font-size: 9.4pt;
+        box-shadow: inset 8px 0 0 rgba(255,255,255,.12);
+    }
+
+    .mcq-card {
+        border: 1px solid var(--line);
+        background: #fbfdff;
+        border-radius: 8px;
+        padding: 8px 12px 7px 12px;
+        margin-bottom: 8px;
+        break-inside: avoid;
+    }
+    .mcq-card .stem { color: #20384e; font-weight: 800; margin-bottom: 3px; }
+    .mcq-card .ask { margin-bottom: 7px; color: #243649; }
+    .options-grid { display: grid; grid-template-columns: 1fr 1fr; column-gap: 30px; row-gap: 3px; }
+    .option { display: flex; align-items: flex-start; gap: 5px; min-height: 15px; }
+    .circle {
+        flex: 0 0 auto;
+        width: 11px;
+        height: 11px;
+        border: 1.55px solid #607d92;
+        border-radius: 50%;
+        margin-top: 1px;
+    }
+    .remember-line { margin-top: 10px; color: #334155; font-size: 9.4pt; }
+    .remember-line b { color: #1a5c8e; }
+
+    .answer-card {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #fbfdff;
+        padding: 11px 14px 12px 14px;
+        margin-bottom: 11px;
+        break-inside: avoid;
+    }
+    .answer-card .qtext { color: #20384e; font-weight: 800; margin-bottom: 7px; }
+    .answer-card .line { border-bottom: 1px dashed #91a6b7; height: 19px; margin-bottom: 5px; }
+    .answer-label-row { display: grid; grid-template-columns: 88px 1fr; align-items: end; margin: 6px 0; color: #225980; font-weight: 800; font-size: 9.7pt; }
+    .answer-label-row .dots { border-bottom: 1px dashed #91a6b7; height: 16px; }
+
+    .case-box {
+        border: 1px solid var(--line);
+        border-radius: 9px;
+        background: #f8fcff;
+        margin-bottom: 14px;
+        overflow: hidden;
+    }
+    .case-title {
+        background: var(--iair-blue);
+        color: white;
+        font-size: 12.4pt;
+        font-weight: 900;
+        padding: 9px 15px;
+    }
+    .case-body { padding: 14px 18px 14px 18px; }
+    .case-body p { margin: 0 0 10px 0; }
+    .case-body ul { margin: 0 0 10px 18px; padding-left: 12px; }
+    .case-body li { margin: 2px 0; }
+    .callout {
+        background: #eaf4fb;
+        border-left: 4px solid #2f76b4;
+        border-radius: 4px;
+        padding: 9px 15px;
+        margin: 8px 0;
+        color: #1d537e;
+        font-weight: 800;
+    }
+
+    .case-q-card {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #fff;
+        padding: 10px 14px 10px 14px;
+        margin-bottom: 11px;
+        min-height: 78px;
+        break-inside: avoid;
+    }
+    .case-q-top { display: flex; justify-content: space-between; gap: 10px; color: #20384e; font-weight: 800; margin-bottom: 12px; }
+    .case-q-top .mark { color: #1e6aa5; white-space: nowrap; font-size: 9.5pt; }
+    .case-q-card .line { border-bottom: 1px dashed #91a6b7; height: 21px; margin-bottom: 4px; }
+
+    .checklist-box {
+        border: 1px solid var(--line);
+        background: #f4fbff;
+        border-radius: 7px;
+        padding: 10px 14px;
+        margin-top: 12px;
+    }
+    .checklist-box h3 { margin: 0 0 6px 0; color: #1b5b8d; font-size: 10.8pt; }
+    .check-grid { display: grid; grid-template-columns: 1fr 1fr; column-gap: 30px; row-gap: 4px; font-size: 9.5pt; }
+    .check-item:before { content: ""; display: inline-block; width: 12px; height: 12px; border: 1.3px solid #7a8ea0; margin-right: 6px; vertical-align: -2px; background: #fff; }
+    .end-label { text-align: center; margin-top: 18px; color: #225980; font-weight: 900; letter-spacing: .3px; }
+
+    /* Solution pages */
+    .solutions-title-row {
+        display: grid;
+        grid-template-columns: 185px 1fr 185px;
+        align-items: center;
+        border-bottom: 2.2px solid var(--iair-blue);
+        padding: 0 0 14px 0;
+        margin-bottom: 18px;
+        min-height: 47px;
+        column-gap: 10px;
+    }
+    .solutions-title-row .top-logo { justify-self: start; align-self: center; }
+    .solutions-title-row .top-logo img { width:165px; height:auto; display:block; }
+    .solutions-title-row .title {
+        color: var(--iair-dark);
+        font-size: 16.7pt;
+        font-weight: 900;
+        text-transform: uppercase;
+        text-align: center;
+        white-space: nowrap;
+        justify-self: center;
+        letter-spacing: .2px;
+    }
+    .solutions-title-row .meta { color: #1e5f98; text-align: right; font-weight: 800; font-size: 10pt; line-height: 1.22; justify-self: end; }
+    .solution-banner {
+        background: var(--iair-blue);
+        color: #fff;
+        padding: 7px 12px;
+        font-weight: 900;
+        border-radius: 6px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 12px;
+        font-size: 10.5pt;
+    }
+    .solution-banner .badge { background: rgba(255,255,255,.22); border-radius: 5px; padding: 3px 11px; font-size: 9.3pt; }
+    .solution-list { margin: 0; padding: 0; list-style: none; }
+    .solution-row {
+        display: grid;
+        grid-template-columns: 34px 1fr;
+        column-gap: 7px;
+        margin-bottom: 9px;
+        break-inside: avoid;
+    }
+    .solution-row .letter { font-size: 15pt; color: var(--iair-blue); font-weight: 900; text-align: center; line-height: 1.1; }
+    .solution-row .sol-body b { color: #1f2937; }
+    .solution-row .explain { color: #334155; margin-top: 2px; }
+
+    .vsq-solution-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px 16px;
+    }
+    .solution-card {
+        border: 1.1px solid var(--line);
+        background: #fff;
+        border-radius: 9px;
+        padding: 0;
+        margin-bottom: 0;
+        overflow: hidden;
+        break-inside: avoid;
+    }
+    .solution-card.featured { grid-column: 1 / -1; }
+    .solution-card h3 {
+        margin: 0;
+        background: #eaf4fb;
+        color: #1d5f91;
+        font-size: 12.1pt;
+        line-height: 1.25;
+        padding: 9px 14px;
+        font-weight: 900;
+    }
+    .solution-card .sol-content {
+        padding: 11px 14px 13px 14px;
+        font-size: 10.4pt;
+        line-height: 1.38;
+    }
+    .solution-card ul { margin: 5px 0 8px 20px; padding-left: 12px; }
+    .solution-card li { margin-bottom: 5px; }
+    .solution-card p { margin: 0 0 8px 0; }
+    .solution-card .solution-line { margin: 0 0 8px 0; }
+    .solution-card .solution-line b { color: #111827; }
+    .assessment-guidance-box {
+        background: #eaf4fb;
+        border-left: 5px solid #2f76b4;
+        padding: 13px 18px;
+        margin-top: 16px;
+        color: #324c62;
+        font-size: 10.3pt;
+    }
+    .two-col-solutions { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 16px; }
+    .case-solution-card {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        overflow: hidden;
+        background: #fff;
+        min-height: 254px;
+    }
+    .case-solution-card h3 { margin: 0; background: #eaf4fb; color: #1d5f91; padding: 10px 13px; font-size: 11.6pt; }
+    .case-solution-card .inside { padding: 12px 14px; }
+    .case-solution-card p { margin: 0 0 8px 0; }
+
+    table.summary-table { width: 100%; border-collapse: collapse; font-size: 10pt; margin-top: 8px; }
+    table.summary-table th { background: var(--iair-blue); color: #fff; text-align: left; padding: 8px 10px; border: 1px solid #d3e0ec; }
+    table.summary-table td { padding: 9px 10px; border: 1px solid #d3e0ec; }
+    table.summary-table tr:nth-child(even) td { background: #f3f8fc; }
+    table.summary-table .total td { font-weight: 900; background: #f2f7fb; }
+    .teacher-note { background: #eaf4fb; border-left: 4px solid #2f76b4; padding: 13px 20px; margin-top: 14px; color: #36536b; }
+    .teacher-note h3 { color: #2a5575; margin: 0 0 7px 0; font-size: 10.3pt; }
+    .teacher-note ul { margin: 0; padding-left: 18px; }
+</style>
+</head>
+<body>
+
+<div class="page compact">
+    <div class="title-box">
+        <div class="title-logo">{% if logo_base64 %}<img src="data:image/png;base64,{{ logo_base64 }}">{% endif %}</div>
+        <div class="title-main">
+            <h1>{{ subject_title }}</h1>
+            <h2>{{ assessment_title }}</h2>
+            <h3>Classes {{ class_range }}</h3>
+        </div>
+        <div class="title-marks">
+            <div>Maximum Marks: {{ max_marks }}</div>
+            <div>Time Allowed: {{ time_allowed }}</div>
+        </div>
+    </div>
+
+    <div class="info-grid">
+        <div class="field-line"><span>Name:</span><span class="dots"></span></div>
+        <div class="field-line"><span>Class &amp; Section:</span><span class="dots"></span></div>
+        <div class="field-line"><span>Roll Number:</span><span class="dots"></span></div>
+        <div class="field-line"><span>Date:</span><span class="dots"></span></div>
+    </div>
+
+    {% if general_instructions %}
+    <div class="instruction-box">
+        <h3>General Instructions</h3>
+        <ol>{% for item in general_instructions %}<li>{{ item }}</li>{% endfor %}</ol>
+    </div>
+    {% endif %}
+
+    <div class="section-header"><span>Section A: Multiple-Choice Questions</span><span class="badge">{{ section_a_marks }}</span></div>
+    {% for q in mcqs[:5] %}
+        <div class="mcq-card">
+            <div class="stem">{{ q.number }}. {{ q.stem }}</div>
+            {% if q.question %}<div class="ask">{{ q.question }}</div>{% endif %}
+            <div class="options-grid">
+                {% for opt in q.options %}<div class="option"><span class="circle"></span><span>{{ opt.letter }}. {{ opt.text }}</span></div>{% endfor %}
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+<div class="page compact">
+    <div class="top-title-row">
+        <div class="top-logo">{% if logo_base64 %}<img src="data:image/png;base64,{{ logo_base64 }}">{% endif %}</div>
+        <div class="page-heading">{{ subject_title }} - {{ week_label }}</div>
+        <div class="right-meta">Classes {{ class_range }}<br>Assessment</div>
+    </div>
+    <div class="section-header"><span>Section A: Multiple-Choice Questions (Continued)</span><span class="badge">{{ section_a_continued_badge }}</span></div>
+    {% for q in mcqs[5:] %}
+        <div class="mcq-card">
+            <div class="stem">{{ q.number }}. {{ q.stem }}</div>
+            {% if q.question %}<div class="ask">{{ q.question }}</div>{% endif %}
+            <div class="options-grid">
+                {% for opt in q.options %}<div class="option"><span class="circle"></span><span>{{ opt.letter }}. {{ opt.text }}</span></div>{% endfor %}
+            </div>
+        </div>
+    {% endfor %}
+    {% if section_a_remember %}<div class="remember-line"><b>Remember:</b> {{ section_a_remember }}</div>{% endif %}
+</div>
+
+{% if very_short_questions %}
+<div class="page">
+    <div class="top-title-row">
+        <div class="top-logo">{% if logo_base64 %}<img src="data:image/png;base64,{{ logo_base64 }}">{% endif %}</div>
+        <div class="page-heading">{{ secB_page_title }}</div>
+        <div class="right-meta">{{ secB_right_label }}</div>
+    </div>
+    <div class="section-header"><span>Section B: Very Short Answer Questions</span><span class="badge">{{ secB_marks_label }}</span></div>
+    {% for q in very_short_questions %}
+    <div class="answer-card">
+        <div class="qtext">{{ q.number }}. {{ q.question }}</div>
+        {% if q.labels %}
+            {% for label in q.labels %}<div class="answer-label-row"><span>{{ label }}</span><span class="dots"></span></div>{% endfor %}
+        {% else %}
+            {% for i in range(q.line_count) %}<div class="line"></div>{% endfor %}
+        {% endif %}
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+{% for case in cases %}
+<div class="page">
+    <div class="top-title-row">
+        <div class="top-logo">{% if logo_base64 %}<img src="data:image/png;base64,{{ logo_base64 }}">{% endif %}</div>
+        <div class="page-heading">{{ secC_page_title }}</div>
+        <div class="right-meta">{{ case.right_label }}</div>
+    </div>
+    {% if loop.first %}<div class="section-header"><span>Section C: Application-Based Questions</span><span class="badge">{{ secC_marks_label }}</span></div>{% endif %}
+    <div class="case-box">
+        <div class="case-title">{{ case.title }}</div>
+        <div class="case-body">
+            {% if case.intro %}<p>{{ case.intro }}</p>{% endif %}
+            {% if case.bullets %}<ul>{% for b in case.bullets %}<li>{{ b }}</li>{% endfor %}</ul>{% endif %}
+            {% if case.pattern_sentence %}<p>{{ case.pattern_sentence }}</p>{% endif %}
+            {% for c in case.callouts %}<div class="callout">"{{ c }}"</div>{% endfor %}
+            {% if case.closing %}<p>{{ case.closing }}</p>{% endif %}
+        </div>
+    </div>
+    {% for q in case.questions %}
+    <div class="case-q-card">
+        <div class="case-q-top"><span>{{ q.letter }}. {{ q.question }}</span><span class="mark">{{ q.mark }}</span></div>
+        <div class="line"></div><div class="line"></div>
+    </div>
+    {% endfor %}
+    {% if loop.last and checklist_items %}
+    <div class="checklist-box">
+        <h3>{{ checklist_title }}</h3>
+        <div class="check-grid">{% for item in checklist_items %}<div class="check-item">{{ item }}</div>{% endfor %}</div>
+    </div>
+    <div class="end-label">{{ end_label }}</div>
+    {% endif %}
+</div>
+{% endfor %}
+
+{% if show_solutions %}
+<div class="page compact">
+    <div class="solutions-title-row">
+        <div class="top-logo">{% if logo_base64 %}<img src="data:image/png;base64,{{ logo_base64 }}">{% endif %}</div>
+        <div class="title">COMPLETE SOLUTIONS</div>
+        <div class="meta">{{ week_label }}<br>Classes {{ class_range }}</div>
+    </div>
+    <div class="solution-banner"><span>ANSWER KEY AND SOLUTIONS</span><span class="badge">Section A: Multiple-Choice Questions&nbsp;&nbsp; {{ secA_solution_marks }}</span></div>
+    <ul class="solution-list">
+    {% for q in mcqs %}
+        <li class="solution-row"><div class="letter">{{ q.answer_letter }}</div><div class="sol-body"><b>{{ q.number }}. {{ q.answer_text }}</b><div class="explain">{{ q.answer_explanation }}</div></div></li>
+    {% endfor %}
+    </ul>
+</div>
+
+<div class="page compact">
+    <div class="solutions-title-row">
+        <div class="top-logo">{% if logo_base64 %}<img src="data:image/png;base64,{{ logo_base64 }}">{% endif %}</div>
+        <div class="title">{{ secB_solution_page_title }}</div>
+        <div class="meta">Very Short Answers<br>{{ secB_solution_marks }}</div>
+    </div>
+    <div class="vsq-solution-grid">
+    {% for q in very_short_questions %}
+    <div class="solution-card {% if loop.first %}featured{% endif %}">
+        <h3>{{ q.number }}. {{ q.solution_title }}</h3>
+        <div class="sol-content">
+            {% if q.solution_intro %}<p>{{ q.solution_intro }}</p>{% endif %}
+            {% if q.solution_points %}
+                <ul>
+                {% for point in q.solution_points %}<li>{% if point.lead %}<b>{{ point.lead }}</b> {{ point.rest }}{% else %}{{ point.text }}{% endif %}</li>{% endfor %}
+                </ul>
+            {% endif %}
+            {% if q.solution_items %}
+                {% for item in q.solution_items %}<div class="solution-line"><b>{{ item.label }}</b>{% if item.body %} - {{ item.body }}{% endif %}</div>{% endfor %}
+            {% endif %}
+            {% if q.solution_text %}<p>{{ q.solution_text }}</p>{% endif %}
+            {% if q.marking %}<p style="margin:8px 0 0 0;"><b>Marking:</b> {{ q.marking }}</p>{% endif %}
+        </div>
+    </div>
+    {% endfor %}
+    </div>
+    {% if secB_guidance %}<div class="assessment-guidance-box"><b>Assessment guidance:</b> {{ secB_guidance }}</div>{% endif %}
+</div>
+
+<div class="page compact">
+    <div class="solutions-title-row">
+        <div class="top-logo">{% if logo_base64 %}<img src="data:image/png;base64,{{ logo_base64 }}">{% endif %}</div>
+        <div class="title">{{ secC_solution_page_title }}</div>
+        <div class="meta">Application Questions<br>{{ secC_solution_marks }}</div>
+    </div>
+    <div class="two-col-solutions">
+    {% for case in cases %}
+        <div class="case-solution-card">
+            <h3>{{ case.title }}</h3>
+            <div class="inside">
+            {% for q in case.questions %}<p><b>{{ q.letter }}. {{ q.solution_label }}:</b> {{ q.answer }}</p>{% endfor %}
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+    <div class="section-header"><span>Final Marking Summary</span><span class="badge">{{ total_marks_label }}</span></div>
+    <table class="summary-table">
+        <tr><th>Section</th><th>Marks</th></tr>
+        {% for row in marking_summary %}<tr class="{% if loop.last %}total{% endif %}"><td>{{ row.section }}</td><td>{{ row.marks }}</td></tr>{% endfor %}
+    </table>
+    {% if teacher_note %}
+    <div class="teacher-note">
+        <h3>Teacher Note</h3>
+        <ul>{% for item in teacher_note %}<li>{{ item }}</li>{% endfor %}</ul>
+    </div>
+    {% endif %}
+</div>
+{% endif %}
+
+</body>
+</html>
