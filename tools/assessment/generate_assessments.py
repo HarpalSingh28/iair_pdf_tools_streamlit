@@ -323,10 +323,19 @@ def render_all(input_path: str, output_dir: str) -> None:
     template = env.get_template(TEMPLATE_NAME)
 
     with sync_playwright() as p:
-        executable_path = os.environ.get("PLAYWRIGHT_CHROMIUM_EXECUTABLE") or shutil.which("chromium") or shutil.which("chromium-browser") or shutil.which("google-chrome") or shutil.which("google-chrome-stable")
-        launch_kwargs = {"args": ["--no-sandbox", "--disable-dev-shm-usage"]}
-        if executable_path:
-            launch_kwargs["executable_path"] = executable_path
+        launch_kwargs = {
+            "headless": True,
+            "args": [
+                "--no-sandbox",
+                "--disable-setuid-sandbox",
+                "--disable-dev-shm-usage",
+                "--disable-gpu",
+                "--single-process",
+                "--no-zygote",
+                "--disable-software-rasterizer",
+            ],
+        }
+
         browser = p.chromium.launch(**launch_kwargs)
         page = browser.new_page(viewport={"width": 794, "height": 1123})
         for row in rows:

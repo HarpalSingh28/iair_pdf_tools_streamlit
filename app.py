@@ -11,9 +11,28 @@ import streamlit as st
 from tools.assignment.generate_pdfs import generate as generate_assignments
 from tools.assessment.generate_assessments import render_all as generate_assessments
 
+import subprocess
+import sys
+from pathlib import Path
+
+
 APP_TITLE = "iAIR PDF Tools"
 MAX_UPLOAD_MB = 25
 BASE_DIR = Path(__file__).resolve().parent
+
+
+
+def ensure_playwright_chromium():
+    cache_dir = Path.home() / ".cache" / "ms-playwright"
+
+    if not cache_dir.exists() or not any(cache_dir.glob("chromium-*")):
+        subprocess.run(
+            [sys.executable, "-m", "playwright", "install", "chromium"],
+            check=True,
+        )
+
+
+ensure_playwright_chromium()
 
 
 TOOLS: Dict[str, Dict[str, object]] = {
