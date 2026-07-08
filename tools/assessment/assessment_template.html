@@ -357,7 +357,7 @@
         <div class="title-main">
             <h1>{{ subject_title }}</h1>
             <h2>{{ assessment_title }}</h2>
-            <h3>Classes {{ class_range }}</h3>
+            <h3>Class {{ class_range }}</h3>
         </div>
         <div class="title-marks">
             <div>Maximum Marks: {{ max_marks }}</div>
@@ -395,7 +395,7 @@
     <div class="top-title-row">
         <div class="top-logo">{% if logo_base64 %}<img src="data:image/png;base64,{{ logo_base64 }}">{% endif %}</div>
         <div class="page-heading">{{ subject_title }} - {{ week_label }}</div>
-        <div class="right-meta">Classes {{ class_range }}<br>Assessment</div>
+        <div class="right-meta">Class {{ class_range }}<br>Assessment</div>
     </div>
     <div class="section-header"><span>Section A: Multiple-Choice Questions (Continued)</span><span class="badge">{{ section_a_continued_badge }}</span></div>
     {% for q in mcqs[5:] %}
@@ -470,7 +470,7 @@
     <div class="solutions-title-row">
         <div class="top-logo">{% if logo_base64 %}<img src="data:image/png;base64,{{ logo_base64 }}">{% endif %}</div>
         <div class="title">COMPLETE SOLUTIONS</div>
-        <div class="meta">{{ week_label }}<br>Classes {{ class_range }}</div>
+        <div class="meta">{{ week_label }}<br>Class {{ class_range }}</div>
     </div>
     <div class="solution-banner"><span>ANSWER KEY AND SOLUTIONS</span><span class="badge">Section A: Multiple-Choice Questions&nbsp;&nbsp; {{ secA_solution_marks }}</span></div>
     <ul class="solution-list">

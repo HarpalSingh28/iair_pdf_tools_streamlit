@@ -213,7 +213,7 @@
     <div class="title-col">
         <h1>{{ subject_title | upper }}</h1>
         <h2>{{ assignment_title | upper }}</h2>
-        <h3>Classes {{ class_range }}</h3>
+        <h3>Class {{ class_range }}</h3>
     </div>
     <div class="marks-col">
         <div>Maximum Marks: {{ max_marks }}</div>
@@ -238,7 +238,9 @@
     <div class="section-body">
         <div class="wordbank">WORD BANK: {{ section_a_wordbank | join('  |  ') }}</div>
         {% for item in section_a_items %}
-        <div class="q-item"><span class="qnum">{{ loop.index }}.</span><span class="qtext">{{ item }}</span><span class="dots"></span></div>
+        <!-- <div class="q-item"><span class="qnum">{{ loop.index }}.</span><span class="qtext">{{ item }}</span><span class="dots"></span></div> -->
+        <div class="q-item"><span class="qnum">{{ loop.index }}.</span><span class="qtext">{{ item }}</span></div>
+
         {% endfor %}
     </div>
 </div>
@@ -323,7 +325,7 @@
 <div class="solutions-page">
     <div class="solutions-header">
         <h1>COMPLETE SOLUTIONS</h1>
-        <div class="meta">{{ week_label }}<br>Classes {{ class_range }}</div>
+        <div class="meta">{{ week_label }}<br>Class {{ class_range }}</div>
     </div>
     <div class="answer-banner">ANSWER KEY</div>
 

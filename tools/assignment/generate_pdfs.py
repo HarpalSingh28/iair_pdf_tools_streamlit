@@ -11,7 +11,6 @@ Defaults:
 """
 import sys
 import os
-import shutil
 import base64
 import openpyxl
 from jinja2 import Environment, FileSystemLoader
@@ -118,7 +117,7 @@ def row_to_context(row_dict):
         "max_marks": row_dict.get("max_marks", ""),
         "time_allowed": row_dict.get("time_allowed", ""),
         "week_label": row_dict.get("week_label", ""),
-        "footer_left": f"{assignment_title} | Classes {class_range} | {org_short_name}",
+        "footer_left": f"{assignment_title} | Class {class_range} | {org_short_name}",
 
         "section_a_marks": row_dict.get("secA_marks", ""),
         "section_a_wordbank": split_pipe(row_dict.get("secA_wordbank")),
@@ -184,7 +183,6 @@ def generate(input_path, output_dir):
                 "--disable-software-rasterizer",
             ],
         }
-
         browser = p.chromium.launch(**launch_kwargs)
         page = browser.new_page()
         for row_dict in rows_to_render:

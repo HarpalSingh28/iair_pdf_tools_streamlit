@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+    @page { size: A4; margin: 1.15cm 1.35cm 1.75cm 1.35cm; }
+    * { box-sizing: border-box; }
+    body { margin:0; font-family: Arial, Helvetica, sans-serif; color:#17314b; font-size:9.6pt; line-height:1.36; }
+    .page { break-after: page; min-height: 254mm; position:relative; }
+    .page:last-child { break-after:auto; }
+    .std-header { display:grid; grid-template-columns: 185px 1fr 185px; align-items:center; min-height:58px; margin:0 0 14px 0; }
+    .std-header img { width:170px; height:auto; display:block; }
+    .std-title { text-align:center; color:#15365f; font-size:15.8pt; font-weight:800; letter-spacing:.2px; text-transform:uppercase; white-space:nowrap; }
+    .std-right { text-align:right; color:#1f5d8c; font-size:9.3pt; font-weight:700; line-height:1.25; }
+    .top-rule { height:3px; background:#2d75b6; margin:-2px 0 16px 0; }
+
+    .cover-top-logo { margin: 0 14px 7px; height: 42px; display:flex; align-items:flex-start; }
+    .cover-top-logo img { width: 178px; height:auto; display:block; }
+    .cover-box { border:2px solid #2d75b6; background:#eaf4fc; border-radius:10px; padding:26px 30px 26px 30px; margin:0 14px 26px; min-height:128px; position:relative; display:flex; align-items:center; justify-content:center; }
+    .cover-mid { position:absolute; left:24px; right:24px; top:50%; transform:translateY(-50%); text-align:center; z-index:1; }
+    .cover-mid h1 { margin:0; color:#15365f; font-size:20pt; letter-spacing:.7px; line-height:1.05; text-transform:uppercase; white-space:nowrap; }
+    .cover-mid h2 { margin:8px 0 5px; color:#2672b2; font-size:14pt; line-height:1.15; text-transform:uppercase; }
+    .cover-mid h3 { margin:0; color:#17314b; font-size:12pt; white-space:nowrap; }
+    .cover-side { position:absolute; right:28px; top:50%; transform:translateY(-50%); width:215px; z-index:2; text-align:right; color:#173f6d; font-weight:700; font-size:9.8pt; line-height:1.65; }
+    .hero { margin:0 14px 24px; background:#236aa4; color:#fff; border-radius:12px; text-align:center; padding:25px 40px; }
+    .hero .label { font-size:10.5pt; font-weight:700; letter-spacing:4px; text-transform:uppercase; margin-bottom:4px; }
+    .hero .title { font-size:24pt; font-weight:800; margin-bottom:13px; }
+    .hero .question { font-size:12.2pt; font-weight:700; color:#fff; max-width:780px; margin:auto; }
+    .mission { margin:0 14px 22px; border:1.6px solid #c7dce9; border-left:5px solid #2d75b6; background:#f5fafe; border-radius:8px; padding:16px 22px; }
+    .mission h3 { margin:0 0 8px; color:#1f5d8c; font-size:14pt; }
+    .mission p { margin:0 0 10px; font-size:10.8pt; }
+    .two-col-list { columns:2; column-gap:50px; margin:0; padding-left:25px; }
+    .student-grid { margin:0 14px 18px; display:grid; grid-template-columns:1fr 1fr; column-gap:60px; row-gap:10px; }
+    .field { display:grid; grid-template-columns:auto 1fr; gap:8px; align-items:end; color:#1f5d8c; font-weight:700; font-size:10.6pt; }
+    .field .line { border-bottom:1.2px dashed #8c9cab; min-height:20px; }
+    .safety { margin:0 14px; border:1.6px solid #f0b64c; background:#fff6e8; border-radius:8px; padding:15px 20px; }
+    .safety h3 { margin:0 0 7px; color:#a56300; font-size:12.2pt; text-transform:uppercase; }
+    .safety p { margin:0; color:#17314b; font-size:10.5pt; }
+
+    .bar { background:#2f78b7; color:#fff; border-radius:6px; padding:8px 14px; font-weight:800; font-size:12pt; display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; }
+    .bar.green { background:#2b8e74; }
+    .bar.orange { background:#d47700; }
+    .bar.dark { background:#174b77; }
+    .bar .right { font-size:11pt; }
+    .subbar { background:#eaf3fa; color:#1f5d8c; border-left:4px solid #2d75b6; padding:8px 12px; font-size:10.5pt; font-weight:800; margin:12px 0 9px; }
+    .hint { background:#eaf3fa; color:#314d64; border-left:4px solid #2d75b6; padding:11px 16px; margin-top:14px; font-size:9.5pt; }
+    .hint b { color:#1f5d8c; }
+    .orange-hint { background:#fff6e8; border:1.5px dashed #f0b64c; color:#a56300; border-radius:8px; padding:15px; text-align:center; font-size:13pt; font-weight:800; margin-top:14px; }
+
+    .step-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px 18px; }
+    .step-card { border:1.6px solid #cbddeb; background:#fbfdff; border-radius:9px; padding:18px 18px; min-height:116px; }
+    .step-card .row { display:flex; align-items:center; gap:10px; margin-bottom:9px; }
+    .num { background:#2f78b7; color:#fff; min-width:28px; height:28px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-size:9.5pt; font-weight:800; }
+    .step-card h3 { margin:0; color:#15436e; font-size:11.2pt; }
+    .step-card p { margin:0; color:#203348; white-space:pre-line; font-size:9.8pt; }
+
+    .card-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px 16px; }
+    .mini-card { border:1.5px solid #d1dee8; border-radius:7px; padding:12px 15px; background:#fbfdff; min-height:72px; }
+    .mini-card h4 { margin:0 0 6px; color:#1f5d8c; font-size:10.6pt; }
+    .mini-card p { margin:0; font-size:9.2pt; }
+    .question { font-weight:800; color:#253a4f; margin:10px 0 8px; }
+    .lines .line { border-bottom:1.1px dashed #b3bcc6; height:21px; }
+    .big-lines .line { height:24px; }
+    .box-line { border:1.3px solid #d3e1eb; border-radius:8px; background:#fbfdff; padding:12px; margin-bottom:9px; }
+    .box-line h4 { margin:0 0 5px; color:#1f5d8c; }
+    .pair-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px 16px; }
+    .full { grid-column:1 / -1; }
+    .option-grid { display:grid; grid-template-columns:repeat(6, auto); gap:11px 19px; align-items:center; margin:6px 0 14px; }
+    .option-grid.two { grid-template-columns:repeat(2, auto); justify-content:start; }
+    .option-grid.three { grid-template-columns:repeat(3, auto); justify-content:start; }
+    .option-grid.four { grid-template-columns:repeat(4, auto); justify-content:start; }
+    .option-grid.checklist { grid-template-columns:1fr 1fr; }
+    .check { display:inline-block; width:11px; height:11px; border:1.4px solid #718393; margin-right:6px; vertical-align:-1px; }
+
+    table { width:100%; border-collapse:collapse; font-size:9.2pt; }
+    th { background:#e6f1f9; color:#1f5d8c; text-align:left; padding:8px 10px; border:1px solid #d0dce6; }
+    td { padding:8px 10px; border:1px solid #d0dce6; vertical-align:top; }
+    .empty-rows td { height:39px; color:#5b6978; }
+    .tall-rows td { height:58px; }
+    .rubric td { height:35px; }
+    .center { text-align:center; }
+    .small { font-size:8.8pt; }
+    .muted { color:#51667a; }
+
+    .domain-card { border:1.5px solid #d1dee8; border-radius:8px; padding:13px 16px; margin-bottom:12px; background:#fbfdff; min-height:105px; }
+    .domain-card h4 { margin:0 0 5px; color:#1f5d8c; font-size:10.8pt; }
+    .domain-card p { margin:0 0 9px; }
+    .flow-card { border:1.5px solid #b8d4e8; background:#f8fcff; border-radius:8px; padding:13px 18px; min-height:78px; margin-bottom:12px; }
+    .flow-card h4 { margin:0 0 3px; color:#1f5d8c; font-size:11pt; }
+    .flow-card .badge { display:inline-block; background:#2f78b7; color:#fff; padding:2px 9px; border-radius:4px; font-size:9pt; margin-right:8px; }
+    .arrow { text-align:center; color:#2d75b6; font-size:16px; line-height:12px; margin:-3px 0 4px; }
+
+    .draw-box { border:1.6px solid #2d75b6; border-radius:8px; padding:14px; background:#fbfdff; }
+    .draw-area { border:1.2px dashed #c8d5df; min-height:365px; margin:8px 0 0; border-radius:5px; background:repeating-linear-gradient(to bottom, #fff 0, #fff 54px, #f4f8fb 55px, #fff 56px); }
+    .draw-area.half { min-height:222px; }
+    .draw-label { display:flex; justify-content:space-between; color:#1f5d8c; font-weight:800; }
+    .screen-table td { height:48px; background:#f7fafc; }
+    .test-card { border:1.5px solid #d1dee8; border-radius:8px; margin-bottom:12px; overflow:hidden; }
+    .test-title { background:#e7f2fa; color:#1f5d8c; font-weight:800; padding:9px 13px; }
+    .test-body { padding:12px 15px; }
+    .rule-card { border:1.4px solid #d6e1ea; border-left:4px solid #2b8e74; border-radius:5px; min-height:70px; margin-bottom:10px; padding:10px 13px; }
+    .rule-card h4 { margin:0 0 5px; color:#2b7b66; }
+    .feedback-box { border:1.5px solid #d1dee8; border-radius:8px; height:132px; background:#fff; }
+    .signature-grid { display:grid; grid-template-columns:1fr 1fr; gap:50px; margin-top:14px; }
+</style>
+</head>
+<body>
+{% macro std_header(title, right1='', right2='') -%}
+<div class="std-header">
+    <div>{% if logo_base64 %}<img src="data:image/png;base64,{{ logo_base64 }}">{% endif %}</div>
+    <div class="std-title">{{ title }}</div>
+    <div class="std-right"><div>{{ right1 }}</div><div>{{ right2 }}</div></div>
+</div>
+<div class="top-rule"></div>
+{%- endmacro %}
+
+<!-- PAGE 1 -->
+<section class="page">
+    <div class="cover-top-logo">{% if logo_base64 %}<img src="data:image/png;base64,{{ logo_base64 }}">{% endif %}</div>
+    <div class="cover-box">
+        <div class="cover-mid">
+            <h1>{{ subject_title }}</h1>
+            <h2>{{ week_label }} {{ project_work_label }}</h2>
+            <h3>Class {{ class_range }} | {{ workbook_label }}</h3>
+        </div>
+        <div class="cover-side">
+            <div>Maximum Marks: {{ max_marks }}</div>
+            <div>Suggested Duration: {{ suggested_duration }}</div>
+            <div>{{ project_mode }}</div>
+        </div>
+    </div>
+    <div class="hero">
+        <div class="label">{{ project_theme_label }}</div>
+        <div class="title">{{ project_title }}</div>
+        <div class="question">{{ driving_question }}</div>
+    </div>
+    <div class="mission">
+        <h3>{{ mission_title }}</h3>
+        <p>{{ mission_text }}</p>
+        <ul class="two-col-list">
+            {% for item in mission_points %}<li>{{ item }}</li>{% endfor %}
+        </ul>
+    </div>
+    <div class="student-grid">
+        <div class="field"><span>Student Name:</span><span class="line"></span></div>
+        <div class="field"><span>Class &amp; Section:</span><span class="line"></span></div>
+        <div class="field"><span>Roll Number:</span><span class="line"></span></div>
+        <div class="field"><span>School Name:</span><span class="line"></span></div>
+        <div class="field"><span>Submission Date:</span><span class="line"></span></div>
+        <div class="field"><span>Teacher:</span><span class="line"></span></div>
+    </div>
+    <div class="safety">
+        <h3>{{ digital_safety_title }}</h3>
+        <p>{{ digital_safety_text }}</p>
+    </div>
+</section>
+
+<!-- PAGE 2 -->
+<section class="page">
+    {{ std_header('How to Do This Project', 'Student Guideline', 'Page 1 of 2') }}
+    <div class="bar"><span>Follow These Steps in Order</span><span class="right">Steps 1-6</span></div>
+    <div class="step-grid">
+        {% for step in steps_1_6 %}
+        <div class="step-card">
+            <div class="row"><span class="num">{{ loop.index }}</span><h3>{{ step.title }}</h3></div>
+            <p>{{ step.text }}</p>
+        </div>
+        {% endfor %}
+    </div>
+    {% if remember_note %}<div class="hint"><b>Remember:</b> {{ remember_note }}</div>{% endif %}
+</section>
+
+<!-- PAGE 3 -->
+<section class="page">
+    {{ std_header('How to Do This Project', 'Student Guideline', 'Page 2 of 2') }}
+    <div class="bar"><span>Continue the Project Steps</span><span class="right">Steps 7-12</span></div>
+    <div class="step-grid">
+        {% for step in steps_7_12 %}
+        <div class="step-card" style="min-height:100px;">
+            <div class="row"><span class="num">{{ loop.index + 6 }}</span><h3>{{ step.title }}</h3></div>
+            <p>{{ step.text }}</p>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="subbar">What You Have to Submit</div>
+    <div class="option-grid checklist">
+        {% for item in submit_items %}<div><span class="check"></span>{{ item }}</div>{% endfor %}
+    </div>
+    <div class="subbar">Suggested Work Plan</div>
+    <table>
+        <tr><th style="width:90px;">Day</th><th>Suggested Task</th></tr>
+        {% for r in work_plan %}<tr><td>{{ r[0] }}</td><td>{{ r[1] }}</td></tr>{% endfor %}
+    </table>
+</section>
+
+<!-- PAGE 4 -->
+<section class="page">
+    {{ std_header('Project Planning', 'Learning Objectives', 'Part A') }}
+    <div class="bar green"><span>Learning Objectives</span><span class="right">What You Will Learn</span></div>
+    <div class="card-grid">
+        {% for obj in learning_objectives %}<div class="mini-card"><h4>{{ obj.title }}</h4><p>{{ obj.text }}</p></div>{% endfor %}
+    </div>
+    <div class="bar" style="margin-top:16px;"><span>PART A: IDENTIFY THE SCHOOL PROBLEM</span><span class="right">Project Idea</span></div>
+    <div class="question">1. Title of My AI Helper</div><div class="lines"><div class="line"></div></div>
+    <div class="question">2. What school problem do you want to solve?</div><div class="lines big-lines"><div class="line"></div><div class="line"></div><div class="line"></div></div>
+    <div class="question">3. Who faces this problem? Tick all that apply.</div>
+    <div class="option-grid">{% for item in part_a_audience_options %}<div><span class="check"></span>{{ item }}</div>{% endfor %}<div>Other: ____________</div></div>
+    <div class="question">4. Where does the problem occur?</div><div class="lines"><div class="line"></div><div class="line"></div></div>
+    <div class="question">5. Why is this problem important?</div><div class="lines"><div class="line"></div><div class="line"></div></div>
+    <div class="question">6. What happens currently? Explain how the problem is solved without your proposed AI helper.</div><div class="lines big-lines"><div class="line"></div><div class="line"></div><div class="line"></div></div>
+</section>
+
+<!-- PAGE 5 -->
+<section class="page">
+    {{ std_header('Human Intelligence at Work', 'Part B', 'Human Thinking Map') }}
+    <div class="bar green"><span>PART B: BEFORE DESIGNING AI</span><span class="right">Observe - Think - Decide</span></div>
+    <p>Understand how a human currently solves the selected problem.</p>
+    <div class="pair-grid">
+        {% for step in human_steps[:4] %}
+        <div class="box-line"><h4>{{ loop.index }}. {{ step.title }}</h4><div class="small">{{ step.text }}</div><div class="lines"><div class="line"></div><div class="line"></div></div></div>
+        {% endfor %}
+        {% if human_steps|length > 4 %}
+        <div class="box-line full"><h4>5. {{ human_steps[4].title }}</h4><div class="small">{{ human_steps[4].text }}</div><div class="lines"><div class="line"></div><div class="line"></div></div></div>
+        {% endif %}
+    </div>
+    <div class="subbar">Types of Intelligence Used</div>
+    <div class="option-grid checklist">{% for item in intelligence_options %}<div><span class="check"></span>{{ item }}</div>{% endfor %}</div>
+    <div class="question">Explain any two choices.</div>
+    <table class="empty-rows"><tr><th style="width:240px;">Intelligence Selected</th><th>How It Helps</th></tr><tr><td>1.</td><td></td></tr><tr><td>2.</td><td></td></tr></table>
+</section>
+
+<!-- PAGE 6 -->
+<section class="page">
+    {{ std_header('AI or Simple Automation?', 'Part C', 'Choose Carefully') }}
+    <div class="bar orange"><span>PART C: CLASSIFY YOUR SOLUTION</span><span class="right">AI - Automation - Both</span></div>
+    <div class="question">1. Could fixed instructions solve the problem?</div>
+    <div class="option-grid three">{% for item in automation_options_1 %}<div><span class="check"></span>{{ item }}</div>{% endfor %}</div>
+    <div class="small">Explain:</div><div class="lines big-lines"><div class="line"></div><div class="line"></div><div class="line"></div></div>
+    <div class="question">2. Does the system need to study data or find patterns?</div>
+    <div class="option-grid two">{% for item in automation_options_2 %}<div><span class="check"></span>{{ item }}</div>{% endfor %}</div>
+    <div class="small">Explain:</div><div class="lines big-lines"><div class="line"></div><div class="line"></div><div class="line"></div></div>
+    <div class="question">3. My proposed solution is mainly:</div>
+    <div class="option-grid three">{% for item in solution_choice_options %}<div><span class="check"></span>{{ item }}</div>{% endfor %}</div>
+    <div class="question">4. Give a reason for your choice.</div><div class="lines big-lines"><div class="line"></div><div class="line"></div><div class="line"></div></div>
+    <div class="subbar">One Clear Difference in My Idea</div>
+    <table class="empty-rows"><tr><th>{{ difference_left_heading }}</th><th>{{ difference_right_heading }}</th></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table>
+    {% if helpful_hint %}<div class="hint"><b>Helpful Hint:</b> {{ helpful_hint }}</div>{% endif %}
+</section>
+
+<!-- PAGE 7 -->
+<section class="page">
+    {{ std_header('Plan the Data', 'Part D', 'Input Information') }}
+    <div class="bar"><span>PART D: WHAT INFORMATION WILL THE HELPER USE?</span><span class="right">Data Plan</span></div>
+    <div class="question">1. What data will the system receive? Tick all that apply.</div>
+    <div class="option-grid">{% for item in data_type_options %}<div><span class="check"></span>{{ item }}</div>{% endfor %}</div>
+    <div class="question">2. Explain the data.</div>
+    <table class="empty-rows"><tr><th style="width:220px;">Data Item</th><th style="width:190px;">Form of Data</th><th>Why It Is Needed</th></tr>{% for i in range(1,5) %}<tr><td>{{ i }}.</td><td></td><td></td></tr>{% endfor %}</table>
+    <div class="question">3. Where will the data come from?</div>
+    <div class="option-grid">{% for item in data_source_options %}<div><span class="check"></span>{{ item }}</div>{% endfor %}<div>Other: ____________</div></div>
+    <div class="question">4. Data that must not be collected: write any three types of information.</div>
+    <div class="lines">{% for i in range(private_info_lines) %}<div class="line"><b>{{ loop.index }}.</b></div>{% endfor %}</div>
+    <div class="question">5. What could happen if the data is incorrect or incomplete?</div><div class="lines big-lines"><div class="line"></div><div class="line"></div><div class="line"></div></div>
+</section>
+
+<!-- PAGE 8 -->
+<section class="page">
+    {{ std_header('Pattern and AI Result', 'Part E', 'From Data to Output') }}
+    <div class="bar"><span>PART E: WHAT WILL THE AI NOTICE AND PROVIDE?</span><span class="right">Pattern - Result</span></div>
+    <div class="question">1. What pattern might the AI identify?</div>
+    <div class="box-line"><div>The AI may notice that whenever ________________________________</div><div class="lines"><div class="line"></div></div><div>then _______________________________________________________</div><div class="lines"><div class="line"></div><div class="line"></div></div></div>
+    <div class="question">2. Type of AI result: tick all that apply.</div>
+    <div class="option-grid four">{% for item in result_type_options %}<div><span class="check"></span>{{ item }}</div>{% endfor %}</div>
+    <div class="question">3. Explain the result. What result will the AI provide?</div><div class="lines big-lines"><div class="line"></div><div class="line"></div><div class="line"></div></div>
+    <div class="subbar">Prediction, Recommendation or Both?</div>
+    <div class="pair-grid"><div class="box-line"><h4>Prediction, if any</h4><div class="small">The AI may predict that:</div><div class="lines"><div class="line"></div><div class="line"></div></div></div><div class="box-line"><h4>Recommendation, if any</h4><div class="small">The AI may recommend that:</div><div class="lines"><div class="line"></div><div class="line"></div></div></div></div>
+    <div class="question">5. Who will use the result?</div><div class="lines"><div class="line"></div><div class="line"></div></div>
+    {% if logic_hint %}<div class="hint"><b>Check your logic:</b> {{ logic_hint }}</div>{% endif %}
+</section>
+
+<!-- PAGE 9 -->
+<section class="page">
+    {{ std_header('Select the AI Domain', 'Part F', 'Major AI Domains') }}
+    <div class="bar green"><span>PART F: WHICH DOMAIN OR DOMAINS WILL BE USED?</span><span class="right">Select and Explain</span></div>
+    {% for card in ai_domain_cards %}
+    <div class="domain-card"><h4><span class="check"></span>{{ card.title }}</h4><p>{{ card.text }}</p><div class="small">Explain:</div><div class="lines"><div class="line"></div><div class="line"></div><div class="line"></div></div></div>
+    {% endfor %}
+    <div class="subbar">Main AI Domain</div>
+    <div>The main AI domain in my project is:</div><div class="lines"><div class="line"></div></div>
+    <div>Because:</div><div class="lines big-lines"><div class="line"></div><div class="line"></div><div class="line"></div></div>
+</section>
+
+<!-- PAGE 10 -->
+<section class="page">
+    {{ std_header('Draw the AI Working Flow', 'Part G', 'Label Every Step') }}
+    <div class="bar"><span>PART G: COMPLETE THE FLOW</span><span class="right">Input to Human Decision</span></div>
+    {% for st in flow_steps %}
+    <div class="flow-card"><h4><span class="badge">STEP {{ loop.index }}</span>{{ st.title }}</h4><div class="muted">{{ st.text }}</div><div class="lines"><div class="line"></div></div></div>
+    {% if not loop.last %}<div class="arrow">↓</div>{% endif %}
+    {% endfor %}
+    <div class="orange-hint">{{ flow_summary }}</div>
+</section>
+
+<!-- PAGE 11 -->
+<section class="page">
+    {{ std_header('Design the Prototype', 'Part H', 'Screen 1') }}
+    <div class="bar dark"><span>SCREEN OR PANEL 1: INPUT</span><span class="right">What the User Provides</span></div>
+    <div class="draw-box"><div class="draw-label"><span>Screen title: _________________________________________</span><span>Draw Here</span></div><div class="draw-area"></div><table class="screen-table"><tr>{% for item in prototype_screen1_boxes %}<th>{{ item }}</th>{% endfor %}</tr><tr>{% for item in prototype_screen1_boxes %}<td><div class="lines"><div class="line"></div><div class="line"></div></div></td>{% endfor %}</tr></table></div>
+    {% if prototype_tip %}<div class="hint"><b>Design Tip:</b> {{ prototype_tip }}</div>{% endif %}
+</section>
+
+<!-- PAGE 12 -->
+<section class="page">
+    {{ std_header('Design the Prototype', 'Part H', 'Screens 2 and 3') }}
+    <div class="bar dark"><span>SCREEN OR PANEL 2: AI PROCESSING</span><span class="right">What the AI Studies</span></div>
+    <div class="draw-box"><div class="draw-label"><span>Screen title: _________________________________________</span><span>Draw Here</span></div><div class="draw-area half"></div><table class="screen-table"><tr>{% for item in prototype_screen2_boxes %}<th>{{ item }}</th>{% endfor %}</tr><tr>{% for item in prototype_screen2_boxes %}<td><div class="lines"><div class="line"></div></div></td>{% endfor %}</tr></table></div>
+    <div class="bar dark" style="margin-top:14px;"><span>SCREEN OR PANEL 3: RESULT AND HUMAN DECISION</span><span class="right">Output and Check</span></div>
+    <div class="draw-box"><div class="draw-label"><span>Screen title: _________________________________________</span><span>Draw Here</span></div><div class="draw-area half"></div><table class="screen-table"><tr>{% for item in prototype_screen3_boxes %}<th>{{ item }}</th>{% endfor %}</tr><tr>{% for item in prototype_screen3_boxes %}<td><div class="lines"><div class="line"></div></div></td>{% endfor %}</tr></table></div>
+</section>
+
+<!-- PAGE 13 -->
+<section class="page">
+    {{ std_header('Test Your AI Helper', 'Part I', 'Test Cases 1 and 2') }}
+    <div class="bar orange"><span>PART I: USE IMAGINARY SITUATIONS</span><span class="right">Test Before Trusting</span></div>
+    <div class="test-card"><div class="test-title">Test Case 1: Normal Situation</div><div class="test-body">{% for f in test_case1_fields %}<div class="question">{{ f }}</div><div class="lines"><div class="line"></div><div class="line"></div></div>{% endfor %}<div class="question">Did the system work properly?</div><div class="option-grid three">{% for item in system_work_options %}<div><span class="check"></span>{{ item }}</div>{% endfor %}</div></div></div>
+    <div class="test-card"><div class="test-title">Test Case 2: Confusing Situation</div><div class="test-body">{% for f in test_case2_fields %}<div class="question">{{ f }}</div><div class="lines"><div class="line"></div><div class="line"></div></div>{% endfor %}</div></div>
+</section>
+
+<!-- PAGE 14 -->
+<section class="page">
+    {{ std_header('Test, Capability and Limitation', 'Parts I and J', 'Human Judgement') }}
+    <div class="bar orange"><span>TEST CASE 3: POSSIBLE AI MISTAKE</span><span class="right">Find the Risk</span></div>
+    <div class="question">Situation</div><div class="lines big-lines"><div class="line"></div><div class="line"></div><div class="line"></div></div>
+    <div class="question">What could cause the mistake? Tick all that apply.</div><div class="option-grid checklist">{% for item in mistake_cause_options %}<div><span class="check"></span>{{ item }}</div>{% endfor %}</div>
+    <div class="question">How can a human correct the situation?</div><div class="lines big-lines"><div class="line"></div><div class="line"></div><div class="line"></div></div>
+    <div class="bar green" style="margin-top:16px;"><span>PART J: CAPABILITY AND LIMITATION</span><span class="right">AI Helps - Humans Decide</span></div>
+    <div class="question">What can the AI helper do well? Write one useful capability.</div><div class="lines"><div class="line"></div><div class="line"></div></div>
+    <div class="question">What can the AI helper not do reliably? Write one limitation.</div><div class="lines"><div class="line"></div><div class="line"></div></div>
+    <div class="question">What can humans do better?</div><div class="lines"><div class="line"></div><div class="line"></div></div>
+    <div class="subbar">Human Decision Point</div>
+    <div>The AI may help by _________________________________________________</div><div class="lines"><div class="line"></div></div>
+    <div>but a human must finally ____________________________________________</div><div class="lines"><div class="line"></div></div>
+</section>
+
+<!-- PAGE 15 -->
+<section class="page">
+    {{ std_header('Responsible AI Rulebook', 'Part K', 'Safe - Fair - Human Controlled') }}
+    <div class="bar green"><span>PART K: WRITE FOUR RESPONSIBLE-AI RULES</span><span class="right">Safety and Fairness</span></div>
+    {% for r in responsible_rules %}<div class="rule-card"><h4>{{ r }}</h4><div class="lines"><div class="line"></div><div class="line"></div><div class="line"></div></div></div>{% endfor %}
+    <div class="question">What should happen if the AI is wrong?</div><div class="lines big-lines"><div class="line"></div><div class="line"></div><div class="line"></div></div>
+    <div class="question">Can a user question or correct the AI result?</div><div class="option-grid two">{% for item in can_user_options %}<div><span class="check"></span>{{ item }}</div>{% endfor %}</div>
+    <div>Explain how:</div><div class="lines"><div class="line"></div><div class="line"></div></div>
+    <div class="orange-hint">My Responsible AI Slogan: “______________________________________________”</div>
+</section>
+
+<!-- PAGE 16 -->
+<section class="page">
+    {{ std_header('Present and Reflect', 'Parts L and M', 'Presentation + Reflection') }}
+    <div class="bar dark"><span>PART L: PRESENT YOUR IDEA</span><span class="right">2-3 Minutes</span></div>
+    <p>Prepare a short presentation. Tick each point after including it.</p>
+    <div class="option-grid checklist">{% for item in presentation_checklist %}<div><span class="check"></span>{{ loop.index }}. {{ item }}</div>{% endfor %}</div>
+    <div class="bar" style="margin-top:12px;"><span>PART M: REFLECTION</span><span class="right">Questions 1-3</span></div>
+    {% for q in reflection_q1_3 %}<div class="question">{{ loop.index }}. {{ q }}</div><div class="lines big-lines"><div class="line"></div><div class="line"></div><div class="line"></div></div>{% endfor %}
+</section>
+
+<!-- PAGE 17 -->
+<section class="page">
+    {{ std_header('Reflection and Submission Check', 'Part M', 'Final Review') }}
+    <div class="bar"><span>PART M: REFLECTION</span><span class="right">Questions 4-7</span></div>
+    {% for q in reflection_q4_7[:3] %}<div class="question">{{ loop.index + 3 }}. {{ q }}</div><div class="lines big-lines"><div class="line"></div><div class="line"></div></div>{% endfor %}
+    <div class="question">7. Complete the sentence.</div>
+    <div>The most important thing I learned is that AI can ______________________________</div><div class="lines"><div class="line"></div></div>
+    <div>but humans must __________________________________________________________</div><div class="lines"><div class="line"></div></div>
+    <div class="subbar">Submission Checklist</div>
+    <div class="option-grid checklist">{% for item in submission_checklist %}<div><span class="check"></span>{{ item }}</div>{% endfor %}</div>
+</section>
+
+<!-- PAGE 18 -->
+<section class="page">
+    {{ std_header('Project Assessment Rubric', 'Teacher Use', 'Maximum Marks: ' ~ max_marks) }}
+    <div class="bar dark"><span>EVALUATION CRITERIA</span><span class="right">Marks Obtained</span></div>
+    <table class="rubric"><tr><th>Evaluation Criteria</th><th style="width:135px;" class="center">Maximum Marks</th><th style="width:150px;" class="center">Marks Obtained</th></tr>{% for r in rubric_rows %}<tr><td>{{ loop.index }}. {{ r[0] }}</td><td class="center">{{ r[1] }}</td><td></td></tr>{% endfor %}<tr><td><b>Total</b></td><td class="center"><b>{{ max_marks }}</b></td><td></td></tr></table>
+    <div class="subbar">Teacher's Feedback</div>
+    <div class="feedback-box"></div>
+    <div class="signature-grid"><div class="field"><span>Teacher's Signature:</span><span class="line"></span></div><div class="field"><span>Date:</span><span class="line"></span></div></div>
+    {% if teacher_guidance_note %}<div class="hint"><b>Teacher Guidance Note:</b> {{ teacher_guidance_note }}</div>{% endif %}
+</section>
+</body>
+</html>

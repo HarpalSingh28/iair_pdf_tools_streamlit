@@ -254,7 +254,7 @@ def row_to_context(row: Dict[str, Any], logo_base64: str) -> Dict[str, Any]:
     week_label = clean(row.get("week_label")) or "WEEK 1"
     class_range = clean(row.get("class_range")) or "6-8"
     org_short_name = clean(row.get("org_short_name")) or "iAIR"
-    footer_left = clean(row.get("footer_left")) or f"AI {week_label.title()} Comprehensive Assessment | Classes {class_range} | {org_short_name}"
+    footer_left = clean(row.get("footer_left")) or f"AI {week_label.title()} Comprehensive Assessment | Class {class_range} | {org_short_name}"
 
     context = {
         "logo_base64": logo_base64,
@@ -335,7 +335,6 @@ def render_all(input_path: str, output_dir: str) -> None:
                 "--disable-software-rasterizer",
             ],
         }
-
         browser = p.chromium.launch(**launch_kwargs)
         page = browser.new_page(viewport={"width": 794, "height": 1123})
         for row in rows:
